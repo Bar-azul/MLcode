@@ -9,11 +9,6 @@ def crawling():
     path = "C:\Program Files (x86)\chromedriver.exe"
     driver = webdriver.Chrome(path)
 
-    #next_page_button = driver.find_element(by=By.XPATH, value='//a[@href="?currPage=2&subLuachNum=2&nehes=1&cityName=תל+אביב+יפו"')
-    #next_page_button.click()
-    #next_page_button.click()
-                                                     #//div[@data-auto="listed-bulletin"]
-
     types = []
     cities = []
     nhoods = []
@@ -28,12 +23,12 @@ def crawling():
 
 
         type = driver.find_elements(by=By.XPATH, value='//table[@id="mainresults"]//tr[@onclick]//td[3]')
-        city = driver.find_elements(by=By.XPATH, value='//table[@id="mainresults"]//tr[@onclick]//td[4]')    #//div[@data-auto="property-address"]
+        city = driver.find_elements(by=By.XPATH, value='//table[@id="mainresults"]//tr[@onclick]//td[4]')
         nhood = driver.find_elements(by=By.XPATH, value='//table[@id="mainresults"]//tr[@onclick]//td[5]')
         street = driver.find_elements(by=By.XPATH, value='//table[@id="mainresults"]//tr[@onclick]//td[6]')
-        room = driver.find_elements(by=By.XPATH, value='//table[@id="mainresults"]//tr[@onclick]//td[7]')  #//div[@data-auto="property-rooms"]
+        room = driver.find_elements(by=By.XPATH, value='//table[@id="mainresults"]//tr[@onclick]//td[7]')
         floor = driver.find_elements(by=By.XPATH, value='//table[@id="mainresults"]//tr[@onclick]//td[8]')
-        price = driver.find_elements(by=By.XPATH, value='//table[@id="mainresults"]//tr[@onclick]//td[9]')   #//div[@data-auto="property-price"]
+        price = driver.find_elements(by=By.XPATH, value='//table[@id="mainresults"]//tr[@onclick]//td[9]')
 
         for i in range(len(price)):
             types.append(type[i].text)
@@ -43,13 +38,7 @@ def crawling():
             rooms.append(room[i].text)
             floors.append(floor[i].text)
             prices.append(price[i].text)
-        #excep:
-     #   driver.quit()
-
-
-    #print(prices)
-    #print(rooms)
-    #print(cities)
+  
     df = pd.DataFrame({ 'type':types,'price': prices,'room':rooms,'floor':floors,'nhood':nhoods,'street':streets, 'city':cities})
     df.to_csv('Houses.csv', index=False)
     driver.quit()
